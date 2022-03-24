@@ -1,15 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.drivebase.TankDrive;
+import com.arcrobotics.ftclib.drivebase.DifferentialDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor.Encoder;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+
 import java.util.Base64;
 
-public class Drivetrain extends CommandBase{
-    private final TankDrive m_drivetrain;
+public class Drivetrain extends SubsystemBase {
+    private final DifferentialDrive m_drivetrain;
     private final Encoder m_left, m_right;
     private final Double WHEEL_DIAMETER;
 
@@ -18,10 +20,41 @@ public class Drivetrain extends CommandBase{
         m_right = rightMotor.encoder;
 
         WHEEL_DIAMETER = diameter;
-        m_drivetrain = new TankDrive(leftMotor, rightMotor);
+        m_drivetrain = new DifferentialDrive(leftMotor, rightMotor);
     }
 
     public void tankDrive(double spd){
         m_drivetrain.tankDrive(spd, spd);
     }
+
+    public void arcadeDrive(double forwardSpd, double turnSpd){
+        m_drivetrain.arcadeDrive(forwardSpd, turnSpd);
+    }
+
+    public double getLeftEncoderVal(){
+        return m_left.getPosition();
+    }
+
+    public double getLeftEncoderDistance(){
+        return m_left.getDistance();
+    }
+
+    public double getRightEncoderVal(){
+        return m_right.getPosition();
+    }
+
+    public double getRightEncoderDistance(){
+        return m_right.getDistance();
+    }
+    public void resetEncoders(){
+        m_left.reset();
+        m_right.reset();
+    }
+
+    public double getAverageEncoderDistance(){
+        return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2.0;
+    }
+
+
+
 }
