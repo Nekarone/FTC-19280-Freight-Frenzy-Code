@@ -36,7 +36,7 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public double getLeftEncoderDistance(){
-        return m_left.getDistance();
+        return m_left.getRevolutions() * WHEEL_DIAMETER * Math.PI;
     }
 
     public double getRightEncoderVal(){
@@ -44,8 +44,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public double getRightEncoderDistance(){
-        return m_right.getDistance();
+        return m_right.getRevolutions() * WHEEL_DIAMETER * Math.PI;
     }
+
     public void resetEncoders(){
         m_left.reset();
         m_right.reset();
